@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:to_do_fojin/consts/colors.dart';
 import 'package:to_do_fojin/consts/styles.dart';
 
-class TaskItemWidget extends StatelessWidget {
-  const TaskItemWidget({
+class CustomButtonWidget extends StatelessWidget {
+  const CustomButtonWidget({
     super.key,
-    required this.text,
     required this.onTap,
+    required this.text,
   });
 
   final String text;
@@ -15,13 +15,12 @@ class TaskItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 10.0),
       decoration: BoxDecoration(
-        color: MainColors.kWhiteColor1,
+        color: MainColors.kRedColor1,
         borderRadius: BorderRadius.circular(20.0),
         boxShadow: [
           BoxShadow(
-            color: MainColors.kGreyColor1.withOpacity(0.4),
+            color: MainColors.kRedColor1.withOpacity(0.4),
             spreadRadius: 1,
             blurRadius: 2,
             offset: const Offset(0, 1),
@@ -34,10 +33,10 @@ class TaskItemWidget extends StatelessWidget {
           onTap: onTap,
           borderRadius: BorderRadius.circular(20.0),
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 24.0),
+            padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
             child: Text(
               text,
-              style: MainStyles.kBlackColor1W500(20.0),
+              style: MainStyles.kWhiteColor1W500(20.0),
             ),
           ),
         ),

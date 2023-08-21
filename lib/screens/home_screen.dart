@@ -5,6 +5,7 @@ import 'package:to_do_fojin/consts/colors.dart';
 import 'package:to_do_fojin/consts/strings.dart';
 import 'package:to_do_fojin/consts/styles.dart';
 import 'package:to_do_fojin/screens/create_task_screen.dart';
+import 'package:to_do_fojin/screens/delete_task_screen.dart';
 import 'package:to_do_fojin/widgets/task_item_widget.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -41,14 +42,17 @@ class HomeScreen extends StatelessWidget {
             ],
           ),
           body: SafeArea(
-            child: BlocProvider.of<TasksCubit>(context).tasksList.isNotEmpty
+            child: BlocProvider.of<TasksCubit>(context).tasks.isNotEmpty
                 ? ListView.builder(
               padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 24.0),
-              itemCount: BlocProvider.of<TasksCubit>(context).tasksList.length,
+              itemCount: BlocProvider.of<TasksCubit>(context).tasks.length,
               itemBuilder: (context, index) {
-                List<String> tasksList = BlocProvider.of<TasksCubit>(context).tasksList;
+                List<String> tasksList = BlocProvider.of<TasksCubit>(context).tasks;
                 return TaskItemWidget(
                   text: tasksList[index],
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => DeleteTaskScreen(taskText: tasksList[index])));
+                  },
                 );
               },
             )
