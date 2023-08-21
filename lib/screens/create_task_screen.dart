@@ -26,7 +26,9 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
   Widget build(BuildContext context) {
     return BlocListener<TasksCubit, TasksState>(
       listener: (context, state) {
-        if (state is TasksInitial) Navigator.pop(context);
+        if (state is TasksInitial) {
+          Navigator.pop(context);
+        }
       },
       child: GestureDetector(
         onTap: () => FocusScope.of(context).requestFocus(FocusNode()),

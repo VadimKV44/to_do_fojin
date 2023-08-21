@@ -42,12 +42,12 @@ class HomeScreen extends StatelessWidget {
             ],
           ),
           body: SafeArea(
-            child: BlocProvider.of<TasksCubit>(context).tasksList.isNotEmpty
+            child: BlocProvider.of<TasksCubit>(context).tasks.isNotEmpty
                 ? ListView.builder(
               padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 24.0),
-              itemCount: BlocProvider.of<TasksCubit>(context).tasksList.length,
+              itemCount: BlocProvider.of<TasksCubit>(context).tasks.length,
               itemBuilder: (context, index) {
-                List<String> tasksList = BlocProvider.of<TasksCubit>(context).tasksList;
+                List<String> tasksList = BlocProvider.of<TasksCubit>(context).tasks;
                 return TaskItemWidget(
                   text: tasksList[index],
                   onTap: () {

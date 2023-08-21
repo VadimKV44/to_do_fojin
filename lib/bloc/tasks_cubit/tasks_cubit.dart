@@ -6,17 +6,17 @@ part 'tasks_state.dart';
 class TasksCubit extends Cubit<TasksState> {
   TasksCubit() : super(TasksInitial());
 
-  List<String> tasksList = [];
+  List<String> tasks = [];
 
   void createTask(String text) {
     if (text.isNotEmpty) {
-      tasksList.add(text);
+      tasks.add(text);
       emit(TasksInitial());
     }
   }
 
   void deleteTask(String text) {
-    tasksList.removeWhere((item) => item == text);
+    tasks.removeWhere((item) => item == text);
     emit(TasksInitial());
   }
 }

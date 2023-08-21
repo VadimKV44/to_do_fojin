@@ -18,7 +18,9 @@ class DeleteTaskScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<TasksCubit, TasksState>(
       listener: (context, state) {
-        if (state is TasksInitial) Navigator.pop(context);
+        if (state is TasksInitial) {
+          Navigator.pop(context);
+        }
       },
       child: Scaffold(
         backgroundColor: MainColors.kWhiteColor1,
