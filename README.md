@@ -1,6 +1,7 @@
 # to_do_fojin
 
 A new Flutter project.
+Flutter SDK version 3.7.3
 
 ## Getting Started
 
