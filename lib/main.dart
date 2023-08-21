@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:to_do_fojin/bloc/tasks_cubit/tasks_cubit.dart';
 import 'package:to_do_fojin/screens/home_screen.dart';
 
 void main() {
@@ -10,8 +12,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: HomeScreen(),
+    return BlocProvider<TasksCubit>(
+      create: (context) => TasksCubit(),
+      child: const MaterialApp(
+        home: HomeScreen(),
+      ),
     );
   }
 }
