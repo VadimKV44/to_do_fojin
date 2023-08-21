@@ -14,4 +14,9 @@ class TasksCubit extends Cubit<TasksState> {
       emit(TasksInitial());
     }
   }
+
+  void deleteTask(String text) {
+    tasksList.removeWhere((item) => item == text);
+    emit(TasksInitial());
+  }
 }

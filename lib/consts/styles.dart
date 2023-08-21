@@ -30,4 +30,12 @@ class MainStyles {
       fontWeight: FontWeight.w500,
     );
   }
+
+  static TextStyle kWhiteColor1W500(double fontSize) {
+    return TextStyle(
+      color: MainColors.kWhiteColor1,
+      fontSize: fontSize,
+      fontWeight: FontWeight.w500,
+    );
+  }
 }
