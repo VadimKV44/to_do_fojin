@@ -10,9 +10,11 @@ class DeleteTaskScreen extends StatelessWidget {
   const DeleteTaskScreen({
     super.key,
     required this.taskText,
+    required this.taskId,
   });
 
   final String taskText;
+  final String taskId;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class DeleteTaskScreen extends StatelessWidget {
           elevation: 2,
           backgroundColor: MainColors.kWhiteColor1,
           title: Text(
-            'Задача такая-то',
+            'Задача $taskId',
             style: MainStyles.kBlackColor1W700(26.0),
           ),
           centerTitle: true,
@@ -47,7 +49,7 @@ class DeleteTaskScreen extends StatelessWidget {
                   alignment: Alignment.center,
                   child: CustomButtonWidget(
                     onTap: () {
-                      BlocProvider.of<TasksCubit>(context).deleteTask(taskText);
+                      BlocProvider.of<TasksCubit>(context).deleteTask(taskId);
                     },
                     text: Strings.deleteTask,
                   ),
