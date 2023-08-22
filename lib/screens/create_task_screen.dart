@@ -72,13 +72,6 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                   },
                   transitionDuration: const Duration(milliseconds: 200),
                   barrierDismissible: true,
-                  selectableDayPredicate: (dateTime) {
-                    if (dateTime == DateTime(2023, 2, 25)) {
-                      return false;
-                    } else {
-                      return true;
-                    }
-                  },
                 );
                 setState(() {});
               },
