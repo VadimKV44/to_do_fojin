@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:to_do_fojin/models/task_model.dart';
+import 'package:uuid/uuid.dart';
 
 part 'tasks_state.dart';
 
@@ -9,28 +10,21 @@ class TasksCubit extends Cubit<TasksState> {
 
   List<TaskModel> tasks = [];
 
-  int taskId = 0;
+  var uuid = Uuid();
 
   void createTask(String text) {
     if (text.isNotEmpty) {
-      if (tasks.isEmpty) {
-        taskId = 0;
-        taskId = taskId + 1;
-      } else {
-        taskId = taskId + 1;
-      }
-
       tasks.add(
         TaskModel(
           text: text,
-          id: taskId,
+          id: uuid.v1(),
         ),
       );
       emit(TasksInitial());
     }
   }
 
-  void deleteTask(int id) {
+  void deleteTask(String id) {
     tasks.removeWhere((item) => item.id == id);
     emit(TasksInitial());
   }

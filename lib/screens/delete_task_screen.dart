@@ -14,7 +14,7 @@ class DeleteTaskScreen extends StatelessWidget {
   });
 
   final String taskText;
-  final int taskId;
+  final String taskId;
 
   @override
   Widget build(BuildContext context) {

@@ -5,5 +5,5 @@ class TaskModel {
   });
 
   final String text;
-  final int id;
+  final String id;
 }
