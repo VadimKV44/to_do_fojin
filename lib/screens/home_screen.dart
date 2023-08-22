@@ -51,6 +51,7 @@ class HomeScreen extends StatelessWidget {
                       List<TaskModel> tasksList = BlocProvider.of<TasksCubit>(context).tasks;
                       return TaskItemWidget(
                         text: tasksList[index].text,
+                        reminderTime: tasksList[index].reminderTime ?? '',
                         onTap: () {
                           Navigator.push(
                             context,

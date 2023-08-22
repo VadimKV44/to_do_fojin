@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
+import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 import 'package:to_do_fojin/bloc/tasks_cubit/tasks_cubit.dart';
 import 'package:to_do_fojin/consts/colors.dart';
 import 'package:to_do_fojin/consts/strings.dart';
 import 'package:to_do_fojin/consts/styles.dart';
+import 'package:to_do_fojin/services/notification_service.dart';
 import 'package:to_do_fojin/widgets/custom_text_field_widget.dart';
 
 class CreateTaskScreen extends StatefulWidget {
@@ -15,6 +18,8 @@ class CreateTaskScreen extends StatefulWidget {
 
 class _CreateTaskScreenState extends State<CreateTaskScreen> {
   final TextEditingController _taskController = TextEditingController();
+
+  DateTime? dateTime;
 
   @override
   void dispose() {
@@ -42,12 +47,52 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
               style: MainStyles.kBlackColor1W700(26.0),
             ),
             centerTitle: true,
+            leading: InkWell(
+              onTap: () async {
+                dateTime = await showOmniDateTimePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(1600).subtract(const Duration(days: 3652)),
+                  lastDate: DateTime.now().add(
+                    const Duration(days: 3652),
+                  ),
+                  is24HourMode: false,
+                  isShowSeconds: false,
+                  minutesInterval: 1,
+                  secondsInterval: 1,
+                  borderRadius: const BorderRadius.all(Radius.circular(16)),
+                  constraints: const BoxConstraints(maxWidth: 350, maxHeight: 650),
+                  transitionBuilder: (context, anim1, anim2, child) {
+                    return FadeTransition(
+                      opacity: anim1.drive(
+                        Tween(begin: 0, end: 1),
+                      ),
+                      child: child,
+                    );
+                  },
+                  transitionDuration: const Duration(milliseconds: 200),
+                  barrierDismissible: true,
+                );
+                setState(() {});
+              },
+              child: const Icon(
+                Icons.access_alarm_outlined,
+                color: MainColors.kBlackColor1,
+                size: 30.0,
+              ),
+            ),
             actions: [
               Padding(
                 padding: const EdgeInsets.only(right: 20.0),
                 child: InkWell(
                   onTap: () {
-                    BlocProvider.of<TasksCubit>(context).createTask(_taskController.text);
+                    if (dateTime != null) {
+                      NotificationService().showNotification(title: 'Напоминание', body: _taskController.text, scheduledDate: dateTime!);
+                    }
+                    BlocProvider.of<TasksCubit>(context).createTask(
+                      _taskController.text,
+                      dateTime != null ? DateFormat('kk:mm yyyy.MM.dd').format(dateTime!).toString() : '',
+                    );
                   },
                   child: const Icon(
                     Icons.save,
@@ -61,8 +106,21 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
           body: SafeArea(
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 24.0),
-              child: CustomTextFieldWidget(
-                controller: _taskController,
+              child: Column(
+                children: [
+                  dateTime != null
+                      ? Padding(
+                          padding: const EdgeInsets.only(bottom: 20.0),
+                          child: Text(
+                            Strings.reminder + DateFormat('kk:mm yyyy.MM.dd').format(dateTime!).toString(),
+                            style: MainStyles.kBlackColor1W500(20.0),
+                          ),
+                        )
+                      : const SizedBox(),
+                  CustomTextFieldWidget(
+                    controller: _taskController,
+                  ),
+                ],
               ),
             ),
           ),

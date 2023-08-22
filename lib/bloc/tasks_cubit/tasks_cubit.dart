@@ -12,12 +12,13 @@ class TasksCubit extends Cubit<TasksState> {
 
   var uuid = Uuid();
 
-  void createTask(String text) {
+  void createTask(String text, String reminderTime) {
     if (text.isNotEmpty) {
       tasks.add(
         TaskModel(
           text: text,
           id: uuid.v1(),
+          reminderTime: reminderTime,
         ),
       );
       emit(TasksInitial());
