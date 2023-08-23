@@ -9,8 +9,21 @@ import 'package:to_do_fojin/screens/create_task_screen.dart';
 import 'package:to_do_fojin/screens/delete_task_screen.dart';
 import 'package:to_do_fojin/widgets/task_item_widget.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+
+  @override
+  void initState() {
+    // BlocProvider.of<TasksCubit>(context).openTaskBox();
+    BlocProvider.of<TasksCubit>(context).readFromTaskBox();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,15 +63,15 @@ class HomeScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       List<TaskModel> tasksList = BlocProvider.of<TasksCubit>(context).tasks;
                       return TaskItemWidget(
-                        text: tasksList[index].text,
+                        text: tasksList[index].text ?? '',
                         reminderTime: tasksList[index].reminderTime ?? '',
                         onTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) => DeleteTaskScreen(
-                                taskText: tasksList[index].text,
-                                taskId: tasksList[index].id,
+                                taskText: tasksList[index].text ?? '',
+                                taskId: tasksList[index].id ?? '',
                               ),
                             ),
                           );

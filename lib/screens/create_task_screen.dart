@@ -89,7 +89,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                     if (dateTime != null) {
                       NotificationService().showNotification(title: 'Напоминание', body: _taskController.text, scheduledDate: dateTime!);
                     }
-                    BlocProvider.of<TasksCubit>(context).createTask(
+                    BlocProvider.of<TasksCubit>(context).saveNewTaskInTaskBox(
                       _taskController.text,
                       dateTime != null ? DateFormat('kk:mm yyyy.MM.dd').format(dateTime!).toString() : '',
                     );
