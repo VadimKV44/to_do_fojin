@@ -10,7 +10,8 @@ class TaskAdapter extends TypeAdapter<TaskModel> {
     final String text = reader.readString();
     final String id = reader.readString();
     final String reminderTime = reader.readString();
-    return TaskModel(text: text, id: id, reminderTime: reminderTime);
+    final List<String> images = reader.readStringList();
+    return TaskModel(text: text, id: id, reminderTime: reminderTime, images: images);
   }
 
   @override
@@ -18,5 +19,6 @@ class TaskAdapter extends TypeAdapter<TaskModel> {
     writer.writeString(obj.text ?? '');
     writer.writeString(obj.id ?? '');
     writer.writeString(obj.reminderTime ?? '');
+    writer.writeStringList(obj.images ?? []);
   }
 }

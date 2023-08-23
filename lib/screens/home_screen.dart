@@ -64,6 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       return TaskItemWidget(
                         text: tasksList[index].text ?? '',
                         reminderTime: tasksList[index].reminderTime ?? '',
+                        pathsToPictures: tasksList[index].images ?? [],
                         onTap: () {
                           Navigator.push(
                             context,
@@ -71,6 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               builder: (context) => DeleteTaskScreen(
                                 taskText: tasksList[index].text ?? '',
                                 taskId: tasksList[index].id ?? '',
+                                pathsToPictures: tasksList[index].images ?? [],
                               ),
                             ),
                           );

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:to_do_fojin/bloc/tasks_cubit/tasks_cubit.dart';
@@ -11,10 +13,12 @@ class DeleteTaskScreen extends StatelessWidget {
     super.key,
     required this.taskText,
     required this.taskId,
+    required this.pathsToPictures,
   });
 
   final String taskText;
   final String taskId;
+  final List<String> pathsToPictures;
 
   @override
   Widget build(BuildContext context) {
@@ -41,10 +45,29 @@ class DeleteTaskScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                taskText.isNotEmpty ? Text(
                   taskText,
                   style: MainStyles.kBlackColor1W500(30.0),
-                ),
+                ) : const SizedBox(),
+                pathsToPictures.isNotEmpty ? Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10.0),
+                    child: PageView.builder(
+                      itemCount: pathsToPictures.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(16.0),
+                            child: Image.file(
+                              File(pathsToPictures[index]),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ) : const SizedBox(),
                 Align(
                   alignment: Alignment.center,
                   child: CustomButtonWidget(

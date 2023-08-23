@@ -6,7 +6,9 @@ class HiveStorage {
   static Box<TaskModel> taskBox = Hive.box<TaskModel>('tasksBox');
 
   static Future<bool> openTaskBox() async {
-    Hive.registerAdapter(TaskAdapter());
+    if (!Hive.isAdapterRegistered(0)) {
+      Hive.registerAdapter(TaskAdapter());
+    }
     taskBox = await Hive.openBox('tasksBox');
     return taskBox.isOpen;
   }
