@@ -44,22 +44,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-//
-// BlocProvider.of<TasksCubit>(context).box.isOpen ? const MaterialApp(
-// home: HomeScreen(),
-// ) : const Center(
-// child: CircularProgressIndicator(),
-// ),
-// );
-
-// Builder(
-// builder: (BuildContext context) {
-// print(BlocProvider.of<TasksCubit>(context).box.isOpen);
-// return BlocProvider.of<TasksCubit>(context).box.isOpen ? const MaterialApp(
-// home: HomeScreen(),
-// ) : const Center(
-// child: CircularProgressIndicator(),
-// );
-// },
-// )

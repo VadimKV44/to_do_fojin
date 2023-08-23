@@ -20,7 +20,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    // BlocProvider.of<TasksCubit>(context).openTaskBox();
     BlocProvider.of<TasksCubit>(context).readFromTaskBox();
     super.initState();
   }
