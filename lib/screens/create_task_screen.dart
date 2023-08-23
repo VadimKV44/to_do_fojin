@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -134,7 +132,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                                 children: [
                                   InkWell(
                                     onTap: () {
-                                      BlocProvider.of<TasksCubit>(context).takePicture();
+                                      BlocProvider.of<TasksCubit>(context).takeAPicture();
                                     },
                                     child: const Icon(Icons.camera_alt, size: 30.0),
                                   ),
