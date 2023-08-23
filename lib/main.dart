@@ -28,16 +28,18 @@ class MyApp extends StatelessWidget {
         return FutureBuilder(
           future: HiveStorage.openTaskBox(),
           builder: (context, snapshot) {
-            return snapshot.data == true
-                ? const MaterialApp(
-                    home: HomeScreen(),
-                  )
-                : Container(
-                    color: MainColors.kWhiteColor1,
-                    child: const Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  );
+            if (snapshot.data == true) {
+              return const MaterialApp(
+                home: HomeScreen(),
+              );
+            } else {
+              return Container(
+                color: MainColors.kWhiteColor1,
+                child: const Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            }
           },
         );
       }),
