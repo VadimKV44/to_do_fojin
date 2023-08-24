@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:to_do_fojin/bloc/tasks_cubit/tasks_cubit.dart';
 import 'package:to_do_fojin/consts/colors.dart';
 import 'package:to_do_fojin/consts/strings.dart';
@@ -7,6 +8,7 @@ import 'package:to_do_fojin/consts/styles.dart';
 import 'package:to_do_fojin/models/task_model.dart';
 import 'package:to_do_fojin/screens/create_task_screen.dart';
 import 'package:to_do_fojin/screens/delete_task_screen.dart';
+import 'package:to_do_fojin/utils/get_device_type.dart';
 import 'package:to_do_fojin/widgets/task_item_widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -17,7 +19,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   @override
   void initState() {
     BlocProvider.of<TasksCubit>(context).readFromTaskBox();
@@ -56,8 +57,12 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           body: SafeArea(
             child: BlocProvider.of<TasksCubit>(context).tasks.isNotEmpty
-                ? ListView.builder(
-                    padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 24.0),
+                ? MasonryGridView.count(
+                    // physics: const NeverScrollableScrollPhysics(),
+                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                    mainAxisSpacing: 0.0,
+                    crossAxisSpacing: 10.0,
+                    crossAxisCount: getDeviceType() == 'phone' ? 1 : 2,
                     itemCount: BlocProvider.of<TasksCubit>(context).tasks.length,
                     itemBuilder: (context, index) {
                       List<TaskModel> tasksList = BlocProvider.of<TasksCubit>(context).tasks;

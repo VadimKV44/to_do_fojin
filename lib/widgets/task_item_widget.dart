@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:to_do_fojin/consts/colors.dart';
 import 'package:to_do_fojin/consts/strings.dart';
 import 'package:to_do_fojin/consts/styles.dart';
@@ -45,35 +46,31 @@ class TaskItemWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                text.isNotEmpty ? Text(
-                  text,
-                  style: MainStyles.kBlackColor1W500(20.0),
-                ) : const SizedBox(),
+                text.isNotEmpty ? Text(text, style: MainStyles.kBlackColor1W500(20.0)) : const SizedBox(),
                 pathsToPictures.isNotEmpty
                     ? Padding(
                         padding: const EdgeInsets.symmetric(vertical: 6.0),
                         child: SizedBox(
                           height: 100.0,
-                          child: Row(
-                            children: pathsToPictures.map((element) {
-                              return Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 2.0),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(6.0),
-                                    child: Image.file(
-                                      File(element),
-                                      fit: BoxFit.fitHeight,
-                                    ),
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: pathsToPictures.length,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(16.0),
+                                  child: Image.file(
+                                    File(pathsToPictures[index]),
                                   ),
                                 ),
                               );
-                            }).toList(),
+                            },
                           ),
                         ),
                       )
                     : const SizedBox(),
-                reminderTime != ''
+                reminderTime.isNotEmpty
                     ? Padding(
                         padding: const EdgeInsets.only(top: 10.0),
                         child: Text(
