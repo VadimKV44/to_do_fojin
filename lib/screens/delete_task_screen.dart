@@ -49,7 +49,7 @@ class DeleteTaskScreen extends StatelessWidget {
                   alignment: Alignment.center,
                   child: CustomButtonWidget(
                     onTap: () {
-                      BlocProvider.of<TasksCubit>(context).deleteTask(taskId);
+                      BlocProvider.of<TasksCubit>(context).deleteFromTaskBox(taskId);
                     },
                     text: Strings.deleteTask,
                   ),
