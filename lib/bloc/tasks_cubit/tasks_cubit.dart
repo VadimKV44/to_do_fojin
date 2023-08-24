@@ -29,7 +29,7 @@ class TasksCubit extends Cubit<TasksState> {
 
   void takePicture() async {
     if (images.length < 5) {
-      XFile? image = await picker.pickImage(source: ImageSource.camera);
+      XFile? image = await picker.pickImage(source: ImageSource.camera, imageQuality: 25);
       if (image != null) {
         images.add(image);
       }
