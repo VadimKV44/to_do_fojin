@@ -58,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
           body: SafeArea(
             child: BlocProvider.of<TasksCubit>(context).tasks.isNotEmpty
                 ? MasonryGridView.count(
-                    // physics: const NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     padding: const EdgeInsets.symmetric(horizontal: 24.0),
                     mainAxisSpacing: 0.0,
                     crossAxisSpacing: 10.0,
