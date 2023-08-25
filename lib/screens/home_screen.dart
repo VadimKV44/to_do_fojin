@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:to_do_fojin/bloc/tasks_cubit/tasks_cubit.dart';
@@ -20,9 +21,28 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  static const platform = MethodChannel('samples.flutter.dev/battery');
+
+  String _batteryLevel = 'Unknown battery level.';
+
+  Future<void> _getBatteryLevel() async {
+    String batteryLevel;
+    try {
+      final int result = await platform.invokeMethod('getBatteryLevel');
+      batteryLevel = 'Заряд батареи $result %';
+    } on PlatformException catch (e) {
+      batteryLevel = "Не удалось определить уровень заряда батареи: '${e.message}'";
+    }
+
+    setState(() {
+      _batteryLevel = batteryLevel;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
+    _getBatteryLevel();
     BlocProvider.of<TasksCubit>(context).readFromTaskBox();
   }
 
@@ -35,9 +55,17 @@ class _HomeScreenState extends State<HomeScreen> {
           appBar: AppBar(
             elevation: 2,
             backgroundColor: MainColors.kWhiteColor1,
-            title: Text(
-              Strings.appForYourTodo,
-              style: MainStyles.kBlackColor1W700(20.0),
+            title: Column(
+              children: [
+                Text(
+                  Strings.appForYourTodo,
+                  style: MainStyles.kBlackColor1W700(20.0),
+                ),
+                Text(
+                  _batteryLevel,
+                  style: TextStyle(color: Colors.green[300], fontWeight: FontWeight.w600, fontSize: 20.0),
+                ),
+              ],
             ),
             centerTitle: true,
             actions: [
