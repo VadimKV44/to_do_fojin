@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:to_do_fojin/bloc/tasks_cubit/tasks_cubit.dart';
@@ -21,8 +22,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
-    BlocProvider.of<TasksCubit>(context).readFromTaskBox();
     super.initState();
+    BlocProvider.of<TasksCubit>(context).readFromTaskBox();
   }
 
   @override
@@ -35,8 +36,8 @@ class _HomeScreenState extends State<HomeScreen> {
             elevation: 2,
             backgroundColor: MainColors.kWhiteColor1,
             title: Text(
-              Strings.allTasks,
-              style: MainStyles.kBlackColor1W700(26.0),
+              Strings.appForYourTodo,
+              style: MainStyles.kBlackColor1W700(20.0),
             ),
             centerTitle: true,
             actions: [
@@ -57,33 +58,56 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           body: SafeArea(
             child: BlocProvider.of<TasksCubit>(context).tasks.isNotEmpty
-                ? MasonryGridView.count(
-                    physics: const NeverScrollableScrollPhysics(),
-                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                    mainAxisSpacing: 0.0,
-                    crossAxisSpacing: 10.0,
-                    crossAxisCount: getDeviceType() == 'phone' ? 1 : 2,
-                    itemCount: BlocProvider.of<TasksCubit>(context).tasks.length,
-                    itemBuilder: (context, index) {
-                      List<TaskModel> tasksList = BlocProvider.of<TasksCubit>(context).tasks;
-                      return TaskItemWidget(
-                        text: tasksList[index].text ?? '',
-                        reminderTime: tasksList[index].reminderTime ?? '',
-                        pathsToPictures: tasksList[index].images ?? [],
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => DeleteTaskScreen(
-                                taskText: tasksList[index].text ?? '',
-                                taskId: tasksList[index].id ?? '',
-                                pathsToPictures: tasksList[index].images ?? [],
-                              ),
-                            ),
-                          );
-                        },
-                      );
-                    },
+                ? CustomScrollView(
+                    slivers: [
+                      SliverAppBar(
+                        flexibleSpace: FlexibleSpaceBar(
+                          centerTitle: true,
+                          titlePadding: const EdgeInsets.only(top: 1.0, bottom: 10.0),
+                          title: Text(
+                            Strings.allTasks,
+                            style: MainStyles.kBlackColor1W700(40.0),
+                          ),
+                        ),
+                        expandedHeight: 100.0,
+                        elevation: 0,
+                        backgroundColor: MainColors.kWhiteColor1,
+                        centerTitle: true,
+                        floating: true,
+                        pinned: true,
+                      ),
+                      SliverToBoxAdapter(
+                        child: MasonryGridView.count(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                          mainAxisSpacing: 0.0,
+                          crossAxisSpacing: 10.0,
+                          crossAxisCount: getDeviceType() == 'phone' ? 1 : 2,
+                          itemCount: BlocProvider.of<TasksCubit>(context).tasks.length,
+                          itemBuilder: (context, index) {
+                            List<TaskModel> tasksList = BlocProvider.of<TasksCubit>(context).tasks;
+                            return TaskItemWidget(
+                              text: tasksList[index].text ?? '',
+                              reminderTime: tasksList[index].reminderTime ?? '',
+                              pathsToPictures: tasksList[index].images ?? [],
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => DeleteTaskScreen(
+                                      taskText: tasksList[index].text ?? '',
+                                      taskId: tasksList[index].id ?? '',
+                                      pathsToPictures: tasksList[index].images ?? [],
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                        ),
+                      ),
+                    ],
                   )
                 : Center(
                     child: Text(
