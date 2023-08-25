@@ -1,3 +1,4 @@
+import 'package:device_orientation/device_orientation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -11,6 +12,7 @@ import 'package:to_do_fojin/models/task_model.dart';
 import 'package:to_do_fojin/screens/create_task_screen.dart';
 import 'package:to_do_fojin/screens/delete_task_screen.dart';
 import 'package:to_do_fojin/utils/get_device_type.dart';
+import 'package:to_do_fojin/widgets/custom_scaffold_message.dart';
 import 'package:to_do_fojin/widgets/task_item_widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -43,6 +45,11 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _getBatteryLevel();
+    deviceOrientation$.listen((orientation) {
+      if (orientation.index != 0) {
+        showCustomScaffoldMessage(context);
+      }
+    });
     BlocProvider.of<TasksCubit>(context).readFromTaskBox();
   }
 
